@@ -57,3 +57,14 @@ contract Poker {
 
         nextPlayer();
     }
+    
+   function fold() public {
+        require(currentPhase != Phase.Showdown, "Game over");
+        Player storage player = findPlayer();
+        require(msg.sender == player.addr, "Not your turn");
+
+        player.folded = true;
+        emit Fold(msg.sender);
+
+        nextPlayer();
+    }
